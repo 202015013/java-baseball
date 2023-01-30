@@ -5,20 +5,18 @@ import java.util.HashMap;
 public class Comparison {
     private int strike;
     private int ball;
-
-    private final HashMap<String, Integer> score = new HashMap<>() {{
-        put("Strike", strike);
-        put("Ball", ball);
+    static final HashMap<String, Integer> score = new HashMap<>() {{
+        put("Strike", 0);
+        put("Ball", 0);
     }};
 
-    HashMap<String, Integer> compare(int[] answer, int[] submit) {
+    void compare(int[] answer, int[] submit) {
         strike = 0;
         ball = 0;
         checkStrikeOrBall(answer, submit);
 
         score.replace("Strike", strike);
         score.replace("Ball", ball);
-        return score;
     }
 
     private void checkStrikeOrBall(int[] answer, int[] submit) {

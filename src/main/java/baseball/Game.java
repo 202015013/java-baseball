@@ -1,7 +1,5 @@
 package baseball;
 
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Scanner;
 
 public class Game {
@@ -9,31 +7,40 @@ public class Game {
     User user = new User();
     Comparison comparison = new Comparison();
     Output output = new Output();
+    static boolean endSign = false;
 
     void start() {
-        int[] answer = computer.makeNumber();
-        System.out.println(Arrays.toString(answer));
-        while (true) {
-            int[] submit = user.submitNumber();
-            HashMap<String, Integer> score = comparison.compare(answer, submit);
-            if (score.get("Strike") == 3) {
-                System.out.println("정답입니다.");
-                choose();
-                break;
+        if (!endSign) {
+            int[] answer = computer.makeNumber();
+            do {
+                int[] submit = user.submit();
+                comparison.compare(answer, submit);
             }
-            output.print(score.get("Strike"), score.get("Ball"));
+            while (!isWin());
+            choose();
+        }
+    }
+
+    private boolean isWin() {
+        int strike = Comparison.score.get("Strike");
+        if (strike == 3) {
+            System.out.println("3개의 숫자를 모두 맞히셨습니다! 게임 종료");
+            return true;
+        } else {
+            output.print();
+            return false;
         }
     }
 
     private void choose() {
+        System.out.println("게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요.");
         Scanner scanner = new Scanner(System.in);
-        System.out.println("재시작 : 1     종료 : 2");
-        if (scanner.nextInt() == 1) {
-            restart();
-        }
+        ChoiceToRestartOrEnd choice = ChoiceToRestartOrEnd.of(scanner.next());
+        choice.proceed(this);
     }
 
-    private void restart() {
+    public void end() {
+        endSign = true;
         start();
     }
 }

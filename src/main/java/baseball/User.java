@@ -4,17 +4,27 @@ import java.util.Scanner;
 
 public class User {
     Scanner scanner = new Scanner(System.in);
+    int[] answerArray;
 
-    int[] submitNumber() {
-        System.out.print("3자리 수를 입력하세요 :  ");
-        int answer = scanner.nextInt();
-        int[] answerArray = new int[3];
-
-        for (int i = 0; i < 3; i++) {
-            //int divideNumber = (10 ^ (3 - i)) / (10 ^ (2 - i));
-            answerArray[i] = answer % 10;
-            answer /= 10;
+    int[] submit() {
+        answerArray = new int[3];
+        try {
+            splitNumber(Integer.parseInt(input()));
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
         }
         return answerArray;
+    }
+
+    private String input() {
+        System.out.print("3자리 수를 입력하세요 :  ");
+        return scanner.next();
+    }
+
+    private void splitNumber(int number) {
+        for (int i = 0; i < 3; i++) {
+            answerArray[i] = number % 10;
+            number /= 10;
+        }
     }
 }

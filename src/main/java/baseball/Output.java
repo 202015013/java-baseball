@@ -1,7 +1,10 @@
 package baseball;
 
 public class Output {
-    void print(int strike, int ball) {
+    void print() {
+        int strike = Comparison.score.get("Strike");
+        int ball = Comparison.score.get("Ball");
+
         if (strike == 0 && ball == 0) {
             System.out.println("낫싱");
         } else {
