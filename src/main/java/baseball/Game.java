@@ -35,8 +35,12 @@ public class Game {
     private void choose() {
         System.out.println("게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요.");
         Scanner scanner = new Scanner(System.in);
-        ChoiceToRestartOrEnd choice = ChoiceToRestartOrEnd.of(scanner.next());
-        choice.proceed(this);
+        try {
+            ChoiceToRestartOrEnd choice = ChoiceToRestartOrEnd.of(scanner.nextInt());
+            choice.proceed(this);
+        } catch (Exception e) {
+            throw new IllegalArgumentException();
+        }
     }
 
     public void end() {

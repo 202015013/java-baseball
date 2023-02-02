@@ -9,9 +9,10 @@ public class User {
     int[] submit() {
         answerArray = new int[3];
         try {
-            splitNumber(Integer.parseInt(input()));
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
+            int number = Integer.parseInt(input());
+            splitNumber(number);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException();
         }
         return answerArray;
     }
